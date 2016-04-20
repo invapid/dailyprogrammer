@@ -6,7 +6,6 @@ Challenge
 * https://www.reddit.com/r/dailyprogrammer/comments/4bc3el/20160321_challenge_259_easy_clarence_the_slow/
 
 Status
-* still need to validate the input
 * need a validatation function - validate the testcases against expected result
 
 Keyboard Layout - horizontal/vertical spacing is 1cm
@@ -25,8 +24,10 @@ testcases = [
 	"255.255.255.255", 
 
 	# testcases not following input requirements
-	"7851", # => 3.41cm
-	"123456789.0", # 13.71cm
+	"255..255.255.255",
+	"255..255.255",
+	"7851",
+	"123456789.0", 
 ]
 
 
@@ -52,26 +53,38 @@ def distance(key1, key2):
 	#print "\t", rowDistance, colDistance, "=>", result
 	return result
 
+def validInput(ip):
+	#
+	# TODO: validate input against ().().().()
+	octets = ip.split(".")
+	if len(octets) != 4:
+		return False
+	
+	for octet in octets: 
+		if not octet.isdigit():
+			# will match empty strings caused by two consecutive dots
+			# will match negative numbers
+			return False
+
+		octet = int(octet)
+		if octet < 0 or octet > 999:
+			return False
+
+	return True
+
+
 def main():
 	populateCoordinates()
 	for testcase in testcases:
-		#
-		# TODO: validate input against ().().().()
-		#	1) octets = testcase.split(".")
-		#	2) if len(octets) != 4: invalid
-		#	3) for octet in octets: 
-		#		if not octet.isdigit(): invalid
-		#		octet = int(octet)
-		#	also:
-		#		* can't have two dots in a row
-		#		octet is in range 0 - 999	
+		if validInput(testcase):
+			idx = 0
+			totalDistance = 0
+			while idx + 1 < len(testcase):
+				totalDistance += distance(testcase[idx], testcase[idx+1])
+				idx += 1		
 
-		idx = 0
-		totalDistance = 0
-		while idx + 1 < len(testcase):
-			totalDistance += distance(testcase[idx], testcase[idx+1])
-			idx += 1		
-
-		print testcase, "=>", round(totalDistance, 2), "cm"
+			print testcase, "=>", round(totalDistance, 2), "cm"
+		else:
+			print testcase, "=> Invalid Input"
 
 main()
