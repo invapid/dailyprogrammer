@@ -1,5 +1,13 @@
 import math
 
+"""
+Design decisions
+* appended values to list for debugging purposes. Could alternatively add to variable to save CPU cycles
+* calculated the diagonals in the main loop to save CPU cyles. Could have broken out into functions, but I wanted to avoid using range multiple times
+
+"""
+
+
 testcases = [
 	[8, 1, 6, 3, 5, 7, 4, 9, 2], # => true
 	[2, 7, 6, 9, 5, 1, 4, 3, 8], # => true
@@ -37,12 +45,11 @@ def isMagicSquare(testcase):
 		#print "Error: dimensions are incorrect"
 		return False 
 		
-
-	# check rows and columns
 	diag1 = []
 	diag2 = []
+
+	# check rows and columns
 	for x in range(0, n):
-		
 		# check rows
 		if getRowSum(testcase, x) != 15:
 			#print "Error: row doesn't add up to 15"
@@ -55,7 +62,6 @@ def isMagicSquare(testcase):
 	
 		# check down diagonal
 		diag1.append(testcase[n * x + x])
-
 
 		# check up diagonal
 		diag2.append(testcase[n*(x+1) - x -1])
