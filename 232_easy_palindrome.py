@@ -1,5 +1,10 @@
 from sys import exit
 
+"""
+Challenge:
+* https://www.reddit.com/r/dailyprogrammer/comments/3kx6oh/20150914_challenge_232_easy_palindromes/
+"""
+
 testcases = {
 	"Was it a car or a cat I saw?": True,
 	"Are we not drawn onward, we few, drawn onward to new area?": False, # is this right?
