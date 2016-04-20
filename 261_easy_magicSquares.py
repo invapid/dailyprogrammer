@@ -6,7 +6,6 @@ Challenge
 
 Design decisions
 * appended values to list for debugging purposes. Could alternatively add to variable to save CPU cycles
-* calculated the diagonals in the main loop to save CPU cyles. Could have broken out into functions, but I wanted to avoid using range multiple times
 
 """
 
@@ -20,24 +19,26 @@ testcases = [
 # it's a 3x3 square - for now
 n = 3
 
-def getRowSum(testcase, x):
-	base = n*x
+def getRowCol(testcase, row, col):
+	return testcase[row*n+col]
 
-	result = sum(testcase[base:base+n]) 
-	# print "row", x, ":", testcase[base:base+n], " => " , result
+def getRowSum(testcase, row):
+	results = []	
+	for col in range(n):
+		results.append(getRowCol(testcase, row, col))
+
+	result = sum(results)
+	#print "row", row, ":", results, " => " , result
 
 	return result
 
 def getColumnSum(testcase, x):
-	# append to array instead of just adding them within the range loop 
-	#	for debugging purposes
-
 	column = []
 	for i in range(0, n):
 		column.append(testcase[x + n*i])
 
 	result = sum(column)
-	# print "column", x, column, "=>", result
+	#print "column", x, column, "=>", result
 
 	return result
 
@@ -71,6 +72,13 @@ def isMagicSquare(testcase):
 	diag1_sum = sum(diag1)
 	diag2_sum = sum(diag2)
 
+	diag1_sum = 0
+	diag2_sum = 0
+
+	for row in range(n):
+		diag1_sum += getRowCol(testcase, row, n-row-1)
+		diag2_sum += getRowCol(testcase, row, row)
+
 	#print "diag1: ", diag1, "=>", diag1_sum
 	#print "diag2: ", diag2, "=>", diag2_sum
 
@@ -79,11 +87,13 @@ def isMagicSquare(testcase):
 		return False
 
 	return True
-	
 
-for testcase in testcases:
-	# print "testcase: ", testcase
-	# print "testcase size: ", len(testcase)
+def main():
+	for testcase in testcases:
+		# print "testcase: ", testcase
+		# print "testcase size: ", len(testcase)
 
-	print testcase, "=>", isMagicSquare(testcase)
+		print testcase, "=>", isMagicSquare(testcase)
 
+if __name__ == '__main__':
+	main()
