@@ -1,12 +1,14 @@
 import math
 
 """
+Challenge
+* https://www.reddit.com/r/dailyprogrammer/comments/4dccix/20160404_challenge_261_easy_verifying_3x3_magic/
+
 Design decisions
 * appended values to list for debugging purposes. Could alternatively add to variable to save CPU cycles
 * calculated the diagonals in the main loop to save CPU cyles. Could have broken out into functions, but I wanted to avoid using range multiple times
 
 """
-
 
 testcases = [
 	[8, 1, 6, 3, 5, 7, 4, 9, 2], # => true
