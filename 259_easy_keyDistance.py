@@ -54,16 +54,14 @@ def distance(key1, key2):
 	return result
 
 def validInput(ip):
-	#
-	# TODO: validate input against ().().().()
 	octets = ip.split(".")
 	if len(octets) != 4:
 		return False
 	
 	for octet in octets: 
 		if not octet.isdigit():
-			# will match empty strings caused by two consecutive dots
-			# will match negative numbers
+			# matches empty strings caused by two consecutive dots
+			# matches negative numbers
 			return False
 
 		octet = int(octet)
